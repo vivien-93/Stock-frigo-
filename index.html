@@ -46,6 +46,17 @@
     </style>
 </head>
 <body>
+	<label for="language">Choisissez votre langue / Choose your language:</label>
+<select id="language" onchange="changeLanguage(this.value)">
+    <option value="index.html" selected>Français</option>
+    <option value="form.html">English</option>
+</select>
+
+<script>
+    function changeLanguage(lang) {
+        window.location.href = lang; // Redirige vers le fichier sélectionné
+    }
+</script>
    <form action="https://formsubmit.co/v.orivel@cowool.co" method="POST">
         <h2>Signaler un problème technique</h2>
         <label for="nom">Votre nom :</label>
