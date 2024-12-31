@@ -10,10 +10,24 @@
             margin: 0;
             padding: 0;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
             min-height: 100vh;
             background-color: #f4f4f4;
+        }
+        #language-selector {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        #language-selector label {
+            margin-right: 10px;
+            font-size: 16px;
+        }
+        #language-selector select {
+            padding: 5px;
+            font-size: 16px;
         }
         form {
             background: white;
@@ -46,18 +60,21 @@
     </style>
 </head>
 <body>
-	<label for="language">Choisissez votre langue / Choose your language:</label>
-<select id="language" onchange="changeLanguage(this.value)">
-    <option value="index.html" selected>Français</option>
-    <option value="form.html">English</option>
-</select>
+    <div id="language-selector">
+        <label for="language">Choisissez votre langue / Choose your language:</label>
+        <select id="language" onchange="changeLanguage(this.value)">
+            <option value="index.html" selected>Français</option>
+            <option value="form.html">English</option>
+        </select>
+    </div>
 
-<script>
-    function changeLanguage(lang) {
-        window.location.href = lang; // Redirige vers le fichier sélectionné
-    }
-</script>
-   <form action="https://formsubmit.co/v.orivel@cowool.co" method="POST">
+    <script>
+        function changeLanguage(lang) {
+            window.location.href = lang; // Redirige vers le fichier sélectionné
+        }
+    </script>
+
+    <form action="https://formsubmit.co/v.orivel@cowool.co" method="POST">
         <h2>Signaler un problème technique</h2>
         <label for="nom">Votre nom :</label>
         <input type="text" id="nom" name="nom" required>
@@ -70,7 +87,7 @@
             <option value="Problème avec une serrure">Problème de sérrure</option>
             <option value="Problème avec le mobilier">Problème de mobilier</option>
             <option value="Problème climatisation">Problème de climatisation (chaud/Froid)</option>
-	    <option value="Problème douche">Problème douche</option>
+            <option value="Problème douche">Problème douche</option>
             <option value="Évier bouché">Évier bouché</option>
             <option value="Autre">Autre</option>
         </select>
