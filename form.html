@@ -13,6 +13,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center; /* centre verticalement */
             min-height: 100vh;
             background-color: #121212; /* Fond noir */
             color: #ffffff; /* Texte en blanc */
@@ -45,8 +46,9 @@
             padding: 70px;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-            max-width: 400px;
-            width: 100%;
+            max-width: 400px; /* Limite la largeur à l'écran, tout en gardant de l'espace */
+            width: 90%; /* adapte la largeur à l'écran, tout en gardant de l'espace */
+            margin: 0 auto; /* Centre le formulaire sur la page */
         }
 
         /* Labels */
