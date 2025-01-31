@@ -3,132 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulaire de Maintenance</title>
+    <title>Stock du Frigo</title>
     <style>
-        /* Style du corps de la page */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center; /* centre verticalement */
-            min-height: 100vh;
-            background-color: #121212; /* Fond noir */
-            color: #ffffff; /* Texte en blanc */
-        }
-
-        /* Style pour le sélecteur de langue */
-        #language-selector {
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
-            margin-bottom: 20px;
-        }
-        #language-selector label {
-            margin-right: 10px;
-            font-size: 16px;
-            color: #ffffff;
-        }
-        #language-selector select {
-            padding: 5px;
-            font-size: 16px;
-            border-radius: 4px;
-            border: none;
-            background-color: #333333;
-            color: #ffffff;
-        }
-
-        /* Style pour le formulaire */
-        form {
-            background: #1e1e1e; /* Fond gris foncé */
-            padding: 50px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-            max-width: 400px; /* Limite la largeur à l'écran, tout en gardant de l'espace */
-            width: 90%; /* adapte la largeur à l'écran, tout en gardant de l'espace */
-            margin: 0 auto; /* Centre le formulaire sur la page */
-        }
-
-        /* Labels */
-        label {
-            display: block;
-            margin: 10px 0 5px;
-            color: #ffffff;
-        }
-
-        /* Champs de saisie, sélection et zone de texte */
-        input, select, textarea, button {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #444444;
-            border-radius: 4px;
-            background-color: #333333; /* Fond des champs */
-            color: #ffffff; /* Texte des champs */
-        }
-
-        /* Boutons */
-        button {
-            background: #007bff; /* Bleu */
-            color: white;
-            border: none;
-            cursor: pointer;
-            font-weight: bold;
-        }
-        button:hover {
-            background: #0056b3; /* Bleu foncé */
-        }
-
-        /* Ajustement des fichiers joints */
-        input[type="file"] {
-            padding: 5px;
-            background-color: #333333;
-            color: #ffffff;
-        }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 10px; border: 1px solid black; text-align: center; }
+        .low { background-color: red; color: white; }
+        .medium { background-color: orange; color: white; }
+        .high { background-color: green; color: white; }
+        button { padding: 5px 10px; cursor: pointer; }
     </style>
 </head>
 <body>
-    <div id="language-selector">
-        <label for="language">Choisissez votre langue / Choose your language:</label>
-        <select id="language" onchange="changeLanguage(this.value)">
-            <option value="index.html" selected>Français</option>
-            <option value="form.html">English</option>
-        </select>
-    </div>
+    <h1>Stock du Frigo</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Boisson</th>
+                <th>Stock</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="stock-table">
+            <!-- Les boissons seront ajoutées ici dynamiquement -->
+        </tbody>
+    </table>
 
     <script>
-        function changeLanguage(lang) {
-            window.location.href = lang; // Redirige vers le fichier sélectionné
-        }
-    </script>
+        const boissons = [
+            { nom: "Coca", stock: 10 },
+            { nom: "Eau", stock: 5 },
+            { nom: "Jus d'orange", stock: 2 }
+        ];
 
-    <form action="https://formsubmit.co/v.orivel@cowool.co" method="POST">
-        <h2 style="color: #ffffff;">Report a technical problem</h2>
-        <label for="nom">Your name :</label>
-        <input type="text" id="nom" name="nom" required>
-       
-        <label for="chambre">Room number :</label>
-        <input type="text" id="chambre" name="chambre" required>
-       
-        <label for="probleme">Problem encountered :</label>
-        <select id="probleme" name="probleme" required>
-            <option value="Problème avec une serrure">Lock problem</option>
-            <option value="Problème avec le mobilier">Furniture problem (Bed / Curtains / Table...)</option>
-            <option value="Problème climatisation">Air conditioning problem (hot/cold)</option>
-            <option value="Problème douche">Shower problem</option>
-            <option value="Évier bouché">Clogged sink</option>
-            <option value="Autre">Other</option>
-        </select>
-       
-        <label for="details">Additional Details :</label>
-        <textarea id="details" name="details" rows="4"></textarea>
-       
-        <label for="photo">Attach a photo (optional) :</label>
-        <input type="file" id="photo" name="photo" accept="image/*">
-        <input type="hidden" name="_next" value="https://vivien-93.github.io/Formulaire-Maintenance/success.html">
-        <button type="submit">Send</button>
-    </form>
+        function updateTable() {
+            const tableBody = document.getElementById("stock-table");
+            tableBody.innerHTML = "";
+            boissons.forEach((boisson, index) => {
+                let stockClass = boisson.stock > 5 ? "high" : boisson.stock > 2 ? "medium" : "low";
+                tableBody.innerHTML += `
+                    <tr class="${stockClass}">
+                        <td>${boisson.nom}</td>
+                        <td>${boisson.stock}</td>
+                        <td>
+                            <button onclick="modifierStock(${index}, 1)">➕</button>
+                            <button onclick="modifierStock(${index}, -1)">➖</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function modifierStock(index, change) {
+            if (boissons[index].stock + change >= 0) {
+                boissons[index].stock += change;
+                updateTable();
+            }
+        }
+
+        updateTable();
+    </script>
 </body>
 </html>
